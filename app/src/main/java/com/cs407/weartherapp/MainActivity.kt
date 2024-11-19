@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        navigateToLogin()
+
 
         fetchUserLocation()
 
@@ -61,10 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-    }
+
 
     private fun fetchUserLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&

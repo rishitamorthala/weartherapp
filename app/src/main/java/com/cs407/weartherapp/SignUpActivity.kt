@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cs407.weartherapp.databinding.ActivitySignupBinding
 import kotlinx.coroutines.*
-//kt file for activity_loggin.xml page
+
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignupBinding
@@ -32,28 +32,63 @@ class SignUpActivity : AppCompatActivity() {
                 performSignUp(firstName, lastName, username, password, gender, birthday)
             }
         }
-
-        binding.loginText.setOnClickListener {
-            // Navigate back to LoginActivity
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     private fun validateInput(firstName: String, lastName: String, username: String, password: String, gender: String, birthday: String): Boolean {
         var isValid = true
-        // Validation logic here, simplified for brevity
+
+        if (firstName.isEmpty()) {
+            binding.firstName.error = "First name cannot be empty"
+            isValid = false
+        } else {
+            binding.firstName.error = null  // Clear any previous error message
+        }
+
+        if (lastName.isEmpty()) {
+            binding.lastName.error = "Last name cannot be empty"
+            isValid = false
+        } else {
+            binding.lastName.error = null
+        }
+
+        if (username.isEmpty()) {
+            binding.username.error = "Username cannot be empty"
+            isValid = false
+        } else {
+            binding.username.error = null
+        }
+
+        if (password.isEmpty()) {
+            binding.password.error = "Password cannot be empty"
+            isValid = false
+        } else {
+            binding.password.error = null
+        }
+
+        if (gender.isEmpty()) {
+            binding.gender.error = "Gender cannot be empty"
+            isValid = false
+        } else {
+            binding.gender.error = null
+        }
+
+        if (birthday.isEmpty()) {
+            binding.birthday.error = "Birthday cannot be empty"
+            isValid = false
+        } else {
+            binding.birthday.error = null
+        }
+
         return isValid
     }
 
     private fun performSignUp(firstName: String, lastName: String, username: String, password: String, gender: String, birthday: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                // Simulate network request or database operation
-                delay(1000)  // Simulate delay for signUp
+                delay(1000)  // Simulate network request or database operation
                 withContext(Dispatchers.Main) {
                     Toast.makeText(applicationContext, "User registered successfully!", Toast.LENGTH_LONG).show()
-                    finish()  // Optionally finish this activity
+                    navigateToPreferences()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -61,5 +96,11 @@ class SignUpActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun navigateToPreferences() {
+        val intent = Intent(this, PreferencesActivity::class.java)
+        startActivity(intent)
+        finish()  // Finish SignUpActivity to remove it from the back stack
     }
 }
