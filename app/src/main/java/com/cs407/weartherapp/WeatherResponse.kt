@@ -1,7 +1,7 @@
 package com.cs407.weartherapp
 
 data class WeatherResponse(
-    val data: List<WeatherData> // Ensure the JSON field matches
+    val data: List<WeatherData>
 )
 
 data class WeatherData(
