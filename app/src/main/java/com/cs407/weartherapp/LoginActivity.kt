@@ -1,10 +1,12 @@
 package com.cs407.weartherapp
 
+import com.cs407.weartherapp.MainActivity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.cs407.weartherapp.databinding.ActivityLoginBinding
 import kotlinx.coroutines.*
+import com.cs407.weartherapp.SignUpActivity
 
 // Kt for the login email page
 class LoginActivity : AppCompatActivity() {
