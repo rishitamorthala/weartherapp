@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
 
                 if (temperature != null) {
                     Log.d("MainActivity", "Current Temperature: $temperature°F")
-                    weatherText.text = "Current Temperature: $temperature°F"
+                    weatherText.text = "Current Temperature in your location: $temperature°F"
                 } else {
                     Log.d("MainActivity", "Temperature data not available")
                     weatherText.text = "Temperature data not available"
