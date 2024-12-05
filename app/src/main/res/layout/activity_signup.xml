@@ -65,26 +65,21 @@
             android:backgroundTint="#DDDDDD"
             android:layout_marginBottom="16dp" />
 
-        <EditText
-            android:id="@+id/gender"
-            android:hint="Gender"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:text="Gender"
             android:textColor="#333333"
             android:textSize="16sp"
-            android:backgroundTint="#DDDDDD"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="8dp" />
 
-        <EditText
-            android:id="@+id/birthday"
-            android:hint="Birthday"
+        <Spinner
+            android:id="@+id/gender_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:textColor="#333333"
-            android:textSize="16sp"
-            android:backgroundTint="#DDDDDD"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"
             android:layout_marginBottom="24dp" />
 
         <Button

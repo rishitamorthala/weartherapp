@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">WeartherApp</string>
+    <string-array name="gender_array">
+        <item>Select Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Non-binary</item>
+        <item>Prefer not to say</item>
+    </string-array>
 </resources>

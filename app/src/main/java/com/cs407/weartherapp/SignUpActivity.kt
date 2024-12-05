@@ -2,10 +2,10 @@ package com.cs407.weartherapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cs407.weartherapp.databinding.ActivitySignupBinding
-import kotlinx.coroutines.*
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -16,6 +16,16 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Set up gender spinner
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.gender_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.genderSpinner.adapter = adapter
+        }
+
         setupClickListeners()
     }
 
@@ -25,11 +35,10 @@ class SignUpActivity : AppCompatActivity() {
             val lastName = binding.lastName.text.toString().trim()
             val username = binding.username.text.toString().trim()
             val password = binding.password.text.toString()
-            val gender = binding.gender.text.toString().trim()
-            val birthday = binding.birthday.text.toString().trim()
+            val gender = binding.genderSpinner.selectedItem.toString()
 
-            if (validateInput(firstName, lastName, username, password, gender, birthday)) {
-                val userData = UserData(firstName, lastName, username, password, gender, birthday)
+            if (validateInput(firstName, lastName, username, password, gender)) {
+                val userData = UserData(firstName, lastName, username, password, gender, "")
                 if (AuthManager.signUp(userData)) {
                     Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
                     navigateToPreferences()
@@ -44,7 +53,7 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun validateInput(firstName: String, lastName: String, username: String, password: String, gender: String, birthday: String): Boolean {
+    private fun validateInput(firstName: String, lastName: String, username: String, password: String, gender: String): Boolean {
         var isValid = true
 
         if (firstName.isEmpty()) {
@@ -75,37 +84,12 @@ class SignUpActivity : AppCompatActivity() {
             binding.password.error = null
         }
 
-        if (gender.isEmpty()) {
-            binding.gender.error = "Gender cannot be empty"
+        if (gender == "Select Gender") {
+            Toast.makeText(this, "Please select a gender", Toast.LENGTH_SHORT).show()
             isValid = false
-        } else {
-            binding.gender.error = null
-        }
-
-        if (birthday.isEmpty()) {
-            binding.birthday.error = "Birthday cannot be empty"
-            isValid = false
-        } else {
-            binding.birthday.error = null
         }
 
         return isValid
-    }
-
-    private fun performSignUp(firstName: String, lastName: String, username: String, password: String, gender: String, birthday: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                delay(1000)  // Simulate network request or database operation
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(applicationContext, "User registered successfully!", Toast.LENGTH_LONG).show()
-                    navigateToPreferences()
-                }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(applicationContext, "Failed to register: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
     }
 
     private fun navigateToPreferences() {
