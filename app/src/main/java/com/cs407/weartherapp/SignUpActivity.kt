@@ -20,6 +20,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
+        // Handle Sign Up button
         binding.signupButton.setOnClickListener {
             val firstName = binding.firstName.text.toString().trim()
             val lastName = binding.lastName.text.toString().trim()
@@ -32,6 +33,13 @@ class SignUpActivity : AppCompatActivity() {
                 performSignUp(firstName, lastName, username, password, gender, birthday)
             }
         }
+
+        // Handle "Already have an account?" button
+        binding.loginText.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()  // Optional: Finish SignUpActivity to prevent going back to it
+        }
     }
 
     private fun validateInput(firstName: String, lastName: String, username: String, password: String, gender: String, birthday: String): Boolean {
@@ -41,7 +49,7 @@ class SignUpActivity : AppCompatActivity() {
             binding.firstName.error = "First name cannot be empty"
             isValid = false
         } else {
-            binding.firstName.error = null  // Clear any previous error message
+            binding.firstName.error = null
         }
 
         if (lastName.isEmpty()) {

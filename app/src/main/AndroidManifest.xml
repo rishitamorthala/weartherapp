@@ -7,9 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
     <application
-
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,9 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeartherApp"
         tools:targetApi="31">
-
-
-        <!-- Main Activity -->
 
         <!-- LoginActivity is the entry point -->
         <activity
@@ -43,9 +38,15 @@
             android:name=".SignUpActivity"
             android:exported="false" />
 
-        <activity android:name=".PreferencesActivity"
-            android:exported="false"/>
+        <!-- PreferencesActivity -->
+        <activity
+            android:name=".PreferencesActivity"
+            android:exported="false" />
 
+        <!-- SettingsActivity -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
 
     </application>
 
