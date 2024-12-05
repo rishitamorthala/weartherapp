@@ -3,6 +3,7 @@ package com.cs407.weartherapp
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
@@ -28,9 +29,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var weatherText: TextView
+    private lateinit var recommendationText: TextView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private val locationPermissionCode = 1000
+    private var cityName: String = "Unknown Location"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,15 +42,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         weatherText = findViewById(R.id.weather_text)
+        recommendationText = findViewById(R.id.recommendation_text)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        // Set up BottomNavigationView
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.navigation_home -> {
-                    true // Already on MainActivity
-                }
+                R.id.navigation_home -> true
                 R.id.navigation_preferences -> {
                     val intent = Intent(this, PreferencesActivity::class.java)
                     startActivity(intent)
@@ -57,7 +58,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Check location permission and start location updates
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -76,8 +76,8 @@ class MainActivity : AppCompatActivity() {
     private fun startLocationUpdates() {
         val locationRequest = LocationRequest.create().apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            interval = 10000 // 10 seconds
-            fastestInterval = 5000 // 5 seconds
+            interval = 60000 // 60 seconds
+            fastestInterval = 30000 // 30 seconds
         }
 
         locationCallback = object : LocationCallback() {
@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity() {
                 val location: Location? = locationResult.lastLocation
                 if (location != null) {
                     Log.d("MainActivity", "Location: ${location.latitude}, ${location.longitude}")
+                    fetchCityName(location.latitude, location.longitude)
                     fetchWeather(location.latitude, location.longitude)
                 }
             }
@@ -103,13 +104,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun fetchCityName(latitude: Double, longitude: Double) {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        try {
+            val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            cityName = addresses?.getOrNull(0)?.locality ?: "Unknown Location"
+        } catch (e: Exception) {
+            Log.e("MainActivity", "Geocoder failed: ${e.localizedMessage}")
+            cityName = "Unknown Location"
+        }
+    }
+
     private fun fetchWeather(latitude: Double, longitude: Double) {
         val username = "school_morthala_rishita"
         val password = "Y40Iu42uWd"
         val credentials = "$username:$password"
         val authHeader = "Basic " + Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
 
-        // Get current time in ISO 8601 format with timezone offset
         val now: String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             ZonedDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX"))
         } else {
@@ -117,11 +128,7 @@ class MainActivity : AppCompatActivity() {
             String.format("%tFT%<tT.000Z", calendar)
         }
 
-        val model = "mix" // Optional model parameter
-
-        val fullUrl = "https://api.meteomatics.com/$now/t_2m:F/$latitude,$longitude/json?model=$model"
-        Log.d("FETCH_WEATHER", "Request URL: $fullUrl")
-        Log.d("FETCH_WEATHER", "Authorization Header: $authHeader")
+        val model = "mix"
 
         val call = RetrofitClient.instance.getTemperature(now, latitude, longitude, model, authHeader)
         call.enqueue(object : Callback<WeatherResponse> {
@@ -142,10 +149,12 @@ class MainActivity : AppCompatActivity() {
 
                 if (temperature != null) {
                     Log.d("MainActivity", "Current Temperature: $temperature°F")
-                    weatherText.text = "Current Temperature in your location: $temperature°F"
+                    weatherText.text = "Current Temperature in $cityName is: $temperature°F"
+                    recommendationText.text = getRecommendation(temperature)
                 } else {
                     Log.d("MainActivity", "Temperature data not available")
                     weatherText.text = "Temperature data not available"
+                    recommendationText.text = ""
                 }
             }
 
@@ -153,9 +162,20 @@ class MainActivity : AppCompatActivity() {
                 Log.e("MainActivity", "API Call Failed: ${t.localizedMessage}")
                 t.printStackTrace()
                 weatherText.text = "API Call Failed: ${t.message}"
+                recommendationText.text = ""
                 Toast.makeText(this@MainActivity, "API Call Failed", Toast.LENGTH_LONG).show()
             }
         })
+    }
+
+    private fun getRecommendation(temperature: Double): String {
+        return when {
+            temperature < 32 -> "It is below freezing! We suggest you bundle up."
+            temperature in 32.0..50.0 -> "We recommend layers as it is pretty chilly."
+            temperature in 50.0..60.0 -> "A hoodie will do!"
+            temperature in 60.0..75.0 -> "We recommend short sleeves!"
+            else -> "We suggest sunscreen!"
+        }
     }
 
     override fun onRequestPermissionsResult(
