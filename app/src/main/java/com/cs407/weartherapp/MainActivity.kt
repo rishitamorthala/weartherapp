@@ -24,6 +24,8 @@ import retrofit2.Response
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import android.os.Handler
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -114,10 +116,19 @@ class MainActivity : AppCompatActivity() {
         try {
             val addresses = geocoder.getFromLocation(latitude, longitude, 1)
             cityName = addresses?.getOrNull(0)?.locality ?: "Unknown Location"
+            Log.d("MainActivity", "City Name: $cityName")
         } catch (e: Exception) {
             Log.e("MainActivity", "Geocoder failed: ${e.localizedMessage}")
             cityName = "Unknown Location"
+            retryFetchCityName(latitude, longitude)
         }
+    }
+
+    private fun retryFetchCityName(latitude: Double, longitude: Double) {
+        Log.d("MainActivity", "Retrying to fetch city name...")
+        Handler(Looper.getMainLooper()).postDelayed({
+            fetchCityName(latitude, longitude)
+        }, 2000) // Retry after 2 seconds
     }
 
     private fun fetchWeather(latitude: Double, longitude: Double) {
