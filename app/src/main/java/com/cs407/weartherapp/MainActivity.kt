@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Check location permission and fetch weather based on user location
+        // Check location permission and start location updates
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
