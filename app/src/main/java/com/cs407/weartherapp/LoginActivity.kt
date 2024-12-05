@@ -1,16 +1,12 @@
 package com.cs407.weartherapp
 
-import com.cs407.weartherapp.MainActivity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cs407.weartherapp.databinding.ActivityLoginBinding
-import kotlinx.coroutines.*
-import com.cs407.weartherapp.SignUpActivity
 
-// Kt for the login email page
 class LoginActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,13 +14,20 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        AuthManager.init(applicationContext)
+
+        if (AuthManager.getCurrentUser() != null) {
+            navigateToMain()
+            return
+        }
+
         setupClickListeners()
     }
 
     private fun setupClickListeners() {
         with(binding) {
             closeButton.setOnClickListener {
-                finish() // Close the LoginActivity
+                finish()
             }
 
             signInButton.setOnClickListener {
@@ -37,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             needAccountText.setOnClickListener {
-                // Navigate to SignUpActivity
+                //navigation to signup
                 val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
                 startActivity(intent)
             }
@@ -50,42 +53,32 @@ class LoginActivity : AppCompatActivity() {
                 usernameLayout.error = "Username cannot be empty"
                 return false
             } else {
-                usernameLayout.error = null // Clear error
+                usernameLayout.error = null
             }
             if (password.isEmpty()) {
                 passwordLayout.error = "Password cannot be empty"
                 return false
             } else {
-                passwordLayout.error = null // Clear error
+                passwordLayout.error = null
             }
             return true
         }
     }
 
     private fun performSignIn(username: String, password: String) {
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                val result = signInUser(username, password)
-                if (result) {
-                    navigateToMain()
-                } else {
-                    binding.passwordLayout.error = "Invalid username or password"
-                }
-            } catch (e: Exception) {
-                binding.passwordLayout.error = "Login failed: ${e.localizedMessage}"
-            }
+        if (AuthManager.login(username, password)) {
+            Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+            navigateToMain()
+        } else {
+            binding.passwordLayout.error = "Invalid username or password"
+            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private suspend fun signInUser(username: String, password: String): Boolean {
-        delay(1000) // Simulate network delay
-        // Here you would typically check the credentials against a network service
-        return username == "admin" && password == "admin" // Dummy check for demonstration
     }
 
     private fun navigateToMain() {
         val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
-        finish() // Finish LoginActivity to remove it from the back stack
+        finish()
     }
 }

@@ -20,7 +20,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
-        // Handle Sign Up button
         binding.signupButton.setOnClickListener {
             val firstName = binding.firstName.text.toString().trim()
             val lastName = binding.lastName.text.toString().trim()
@@ -30,15 +29,18 @@ class SignUpActivity : AppCompatActivity() {
             val birthday = binding.birthday.text.toString().trim()
 
             if (validateInput(firstName, lastName, username, password, gender, birthday)) {
-                performSignUp(firstName, lastName, username, password, gender, birthday)
+                val userData = UserData(firstName, lastName, username, password, gender, birthday)
+                if (AuthManager.signUp(userData)) {
+                    Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
+                    navigateToPreferences()
+                } else {
+                    Toast.makeText(this, "Username already exists!", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
-        // Handle "Already have an account?" button
         binding.loginText.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()  // Optional: Finish SignUpActivity to prevent going back to it
+            finish()
         }
     }
 
@@ -109,6 +111,6 @@ class SignUpActivity : AppCompatActivity() {
     private fun navigateToPreferences() {
         val intent = Intent(this, PreferencesActivity::class.java)
         startActivity(intent)
-        finish()  // Finish SignUpActivity to remove it from the back stack
+        finish()
     }
 }
