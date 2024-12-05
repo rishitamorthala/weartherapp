@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    //id("kotlin-kapt") **CHANGED FOR COMPATABILITY**
-    id("com.google.devtools.ksp") version "1.9.22-1.0.17"
+    id("kotlin-kapt")
+    //id("com.google.devtools.ksp") version "1.9.22-1.0.17"
 }
 
 
@@ -36,13 +36,13 @@ android {
 
     compileOptions {
         //CHANGED VERSION from "VERSION_1_8"
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
         //CHANGED TARGET FROM "1.8"
-        jvmTarget = "17"
+        jvmTarget = "1.8"
     }
 
     packaging {
