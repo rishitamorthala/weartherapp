@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var locationCallback: LocationCallback
     private val locationPermissionCode = 1000
     private var cityName: String = "Unknown Location"
+    private var userName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +47,12 @@ class MainActivity : AppCompatActivity() {
         weatherText = findViewById(R.id.weather_text)
         recommendationText = findViewById(R.id.recommendation_text)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        //for the saving of the user's name
+        val prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        val userName = prefs.getString("FirstName", "User")
+
+        val greetingText = findViewById<TextView>(R.id.greeting_text)
+        greetingText.text = "Hello $userName! Here's the weather for today!"
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->

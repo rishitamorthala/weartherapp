@@ -40,6 +40,7 @@ class SignUpActivity : AppCompatActivity() {
             if (validateInput(firstName, lastName, username, password, gender)) {
                 val userData = UserData(firstName, lastName, username, password, gender, "")
                 if (AuthManager.signUp(userData)) {
+                    saveUserName(firstName)
                     Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show()
                     navigateToPreferences()
                 } else {
@@ -52,7 +53,14 @@ class SignUpActivity : AppCompatActivity() {
             finish()
         }
     }
-
+    //this is the func to output the names on the home page
+    private fun saveUserName(firstName: String) {
+        val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putString("FirstName", firstName)
+            apply()
+        }
+    }
     private fun validateInput(firstName: String, lastName: String, username: String, password: String, gender: String): Boolean {
         var isValid = true
 
