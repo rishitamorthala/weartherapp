@@ -13,6 +13,15 @@ data class UserData(
     val birthday: String
 )
 
+data class WeatherPreferences(
+    //cold, hot, neither
+    val temperaturePreference: String,
+    //high, moderate, low
+    val windSensitivity: String,
+    //casual, formal, sporty
+    val stylePreference: String
+)
+
 object AuthManager {
     private const val PREF_NAME = "user_prefs"
     private lateinit var prefs: SharedPreferences
@@ -63,5 +72,17 @@ object AuthManager {
 
     fun logout() {
         prefs.edit().remove("current_user").apply()
+    }
+
+    fun saveWeatherPreferences(username: String, preferences: WeatherPreferences) {
+        val prefsJson = gson.toJson(preferences)
+        prefs.edit().putString("weather_prefs_$username", prefsJson).apply()
+    }
+
+    fun getWeatherPreferences(username: String): WeatherPreferences? {
+        val prefsJson = prefs.getString("weather_prefs_$username", null)
+        return if (prefsJson != null) {
+            gson.fromJson(prefsJson, WeatherPreferences::class.java)
+        } else null
     }
 }
