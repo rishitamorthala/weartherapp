@@ -2,9 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
-    //id("com.google.devtools.ksp") version "1.9.22-1.0.17"
 }
-
 
 android {
     namespace = "com.cs407.weartherapp"
@@ -16,6 +14,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,13 +34,11 @@ android {
     }
 
     compileOptions {
-        //CHANGED VERSION from "VERSION_1_8"
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        //CHANGED TARGET FROM "1.8"
         jvmTarget = "1.8"
     }
 
@@ -54,8 +51,6 @@ android {
                 "META-INF/NOTICE",
                 "META-INF/NOTICE.txt",
                 "META-INF/INDEX.LIST",
-                "META-INF/git.properties",
-                "META-INF/git.properties.*",
                 "**/git.properties",
                 "META-INF/*.kotlin_module"
             )
@@ -64,13 +59,11 @@ android {
 }
 
 dependencies {
-    implementation("com.google.code.gson:gson:2.10.1")
     // Core AndroidX libraries
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.0")
-
 
     // Retrofit and OkHttp for networking
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -83,27 +76,23 @@ dependencies {
 
     // Google Play Services for location
     implementation("com.google.android.gms:play-services-location:21.0.1")
-    
 
     // Stetho for debugging
     implementation("com.facebook.stetho:stetho:1.6.0")
     implementation("com.facebook.stetho:stetho-okhttp3:1.6.0")
 
-    // Navigation
+    // Android Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
 
-    // Coroutines
+    // Kotlin Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
-    // DataFrame library (if required)
-    implementation("org.jetbrains.kotlinx:dataframe:0.8.1")
-
-    // Testing libraries
+    // Testing Libraries
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 
-    //card view for settings page
+    // CardView for Settings Page
     implementation("androidx.cardview:cardview:1.0.0")
 }

@@ -9,6 +9,8 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitInstance {
 
+    private const val BASE_URL = "https://api.meteomatics.com/"
+
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
@@ -30,9 +32,20 @@ object RetrofitInstance {
         .writeTimeout(30, TimeUnit.SECONDS)
         .build()
 
+    // Retrofit instance for weather and wind API
     val api: ParametersAPIInterface by lazy {
         Retrofit.Builder()
-            .baseUrl("https://api.meteomatics.com/")
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(httpClient)
+            .build()
+            .create(ParametersAPIInterface::class.java)
+    }
+
+    // Method to create a dynamic Retrofit instance for specific API URLs
+    fun createDynamicApi(baseUrl: String): ParametersAPIInterface {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient)
             .build()
