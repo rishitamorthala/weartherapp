@@ -68,23 +68,30 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
 
+        setupBottomNavigation()
+    }
+
+    private fun setupBottomNavigation() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_home -> {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
+                    finish()
                     true
                 }
                 R.id.navigation_preferences -> {
                     val intent = Intent(this, PreferencesActivity::class.java)
                     startActivity(intent)
+                    finish()
                     true
                 }
                 R.id.navigation_settings -> true
                 else -> false
             }
         }
+        bottomNavigationView.selectedItemId = R.id.navigation_settings
     }
 
     override fun onResume() {

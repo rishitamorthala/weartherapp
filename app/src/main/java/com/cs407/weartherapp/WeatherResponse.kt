@@ -17,5 +17,6 @@ data class Coordinate(
 
 data class DateValue(
     val date: String,
-    val value: Double
+    val value: Double,
+    val description: String
 )

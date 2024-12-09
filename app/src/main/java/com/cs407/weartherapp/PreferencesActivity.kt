@@ -24,7 +24,7 @@ class PreferencesActivity : AppCompatActivity() {
         submitButton.setOnClickListener {
             if (validateSelections()) {
                 savePreferences()
-                //go to home page
+                // Navigate to home page
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -113,7 +113,7 @@ class PreferencesActivity : AppCompatActivity() {
 
     private fun setupBottomNavigation() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_home -> {
                     val intent = Intent(this, MainActivity::class.java)
@@ -122,6 +122,12 @@ class PreferencesActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_preferences -> true
+                R.id.navigation_settings -> {
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    true
+                }
                 else -> false
             }
         }
