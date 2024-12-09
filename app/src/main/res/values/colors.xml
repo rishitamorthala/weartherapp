@@ -17,4 +17,12 @@
     <color name="dark_on_primary">#000000</color>
     <color name="dark_on_background">#FFFFFF</color>
     <color name="dark_on_surface">#FFFFFF</color>
+
+    <!-- Additional colors -->
+    <color name="purple_500">#6200EE</color>
+    <color name="purple_700">#3700B3</color>
+    <color name="purple_50">#F3E5F5</color>
+    <color name="gray_800">#424242</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#FF000000</color>
 </resources>

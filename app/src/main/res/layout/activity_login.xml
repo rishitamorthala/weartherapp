@@ -6,17 +6,7 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/login_weather_icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="@string/weather_icon"
-        android:src="@drawable/ic_sunny"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
+    <!-- Removed the weather icon ImageView -->
 
     <ImageButton
         android:id="@+id/closeButton"
@@ -25,7 +15,7 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@android:drawable/ic_menu_close_clear_cancel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_weather_icon"
+        app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="Close" />
 
     <TextView
