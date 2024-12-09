@@ -207,7 +207,7 @@ class MainActivity : AppCompatActivity() {
             "clear", "sunny" -> weatherIcon.setImageResource(R.drawable.ic_sunny)
             "cloudy" -> weatherIcon.setImageResource(R.drawable.ic_cloudy)
             "rain", "rainy" -> weatherIcon.setImageResource(R.drawable.ic_rainy)
-            "snow" -> weatherIcon.setImageResource(R.drawable.ic_snow)
+            "snow" -> weatherIcon.setImageResource(R.drawable.ic_sunny)
             else -> weatherIcon.setImageResource(R.drawable.ic_unknown_weather)
         }
     }
