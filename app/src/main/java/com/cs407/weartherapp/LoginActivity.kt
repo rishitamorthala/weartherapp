@@ -2,7 +2,6 @@ package com.cs407.weartherapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cs407.weartherapp.databinding.ActivityLoginBinding
@@ -17,13 +16,13 @@ class LoginActivity : AppCompatActivity() {
 
         AuthManager.init(applicationContext)
 
+        // Check if the user is already logged in
         if (AuthManager.getCurrentUser() != null) {
             navigateToMain()
             return
         }
 
         setupClickListeners()
-        updateWeatherVisual() // Add weather visuals during login
     }
 
     private fun setupClickListeners() {
@@ -81,18 +80,5 @@ class LoginActivity : AppCompatActivity() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
-    }
-
-    private fun updateWeatherVisual() {
-        // Example: Fetching weather condition and setting appropriate icon
-        val weatherCondition = "Sunny" // Replace with actual condition fetched from API or shared data
-        val weatherIcon = findViewById<ImageView>(R.id.login_weather_icon)
-
-        when (weatherCondition) {
-            "Sunny" -> weatherIcon.setImageResource(R.drawable.ic_sunny)
-            "Rainy" -> weatherIcon.setImageResource(R.drawable.ic_rainy)
-            "Cloudy" -> weatherIcon.setImageResource(R.drawable.ic_cloudy)
-            else -> weatherIcon.setImageResource(R.drawable.ic_unknown_weather)
-        }
     }
 }
