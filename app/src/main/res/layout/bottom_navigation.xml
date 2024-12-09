@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="?android:attr/windowBackground"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
+        app:itemIconTint="@color/light_on_background"
+        app:itemTextColor="@color/light_on_background"
         app:menu="@menu/bottom_nav_menu"
         android:elevation="8dp" />
 

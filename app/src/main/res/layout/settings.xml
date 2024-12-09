@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA">
+    android:background="@color/light_background">
 
     <!-- Settings Title -->
     <TextView
@@ -15,7 +15,7 @@
         android:text="Settings"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:textColor="#1A1A1A"
+        android:textColor="@color/light_on_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textSize="20sp"
-        android:textColor="#666666"
+        android:textColor="@color/light_on_background"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
         android:layout_marginTop="32dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        android:background="#FFFFFF"
+        android:background="@color/light_surface"
         app:layout_constraintTop_toBottomOf="@id/userFullName">
 
         <LinearLayout
@@ -66,7 +66,7 @@
                     android:layout_weight="1"
                     android:text="Notifications"
                     android:textSize="18sp"
-                    android:textColor="#1A1A1A" />
+                    android:textColor="@color/light_on_surface" />
 
                 <Switch
                     android:id="@+id/notificationsSwitch"
@@ -77,7 +77,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#E0E0E0"
+                android:background="@color/light_on_surface"
+                android:alpha="0.12"
                 android:layout_marginVertical="8dp"/>
 
             <!-- Theme Section -->
@@ -95,7 +96,7 @@
                     android:layout_weight="1"
                     android:text="Light Mode/ Dark Mode"
                     android:textSize="18sp"
-                    android:textColor="#1A1A1A" />
+                    android:textColor="@color/light_on_surface" />
 
                 <Switch
                     android:id="@+id/themeSwitch"
@@ -115,7 +116,7 @@
         android:text="Logout"
         android:textSize="18sp"
         android:textAllCaps="false"
-        android:textColor="@android:color/white"
+        android:textColor="@color/light_on_primary"
         android:backgroundTint="#FF3B30"
         android:elevation="4dp"
         android:layout_marginStart="24dp"
@@ -128,10 +129,10 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="@color/light_surface"
         android:elevation="8dp"
-        app:itemIconTint="#1A1A1A"
-        app:itemTextColor="#1A1A1A"
+        app:itemIconTint="@color/light_on_surface"
+        app:itemTextColor="@color/light_on_surface"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

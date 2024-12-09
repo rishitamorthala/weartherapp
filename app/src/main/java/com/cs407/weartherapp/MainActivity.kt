@@ -13,6 +13,7 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.cs407.weartherapp.databinding.ActivityMainBinding
@@ -39,6 +40,15 @@ class MainActivity : AppCompatActivity() {
     private var userName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Load and apply saved theme preference
+        val prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
+        val isDarkMode = prefs.getBoolean("dark_mode_enabled", false)
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -48,8 +58,8 @@ class MainActivity : AppCompatActivity() {
         recommendationText = findViewById(R.id.recommendation_text)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         //for the saving of the user's name
-        val prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-        val userName = prefs.getString("FirstName", "User")
+        val userPrefs = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        val userName = userPrefs.getString("FirstName", "User")
 
         val greetingText = findViewById<TextView>(R.id.greeting_text)
         greetingText.text = "Hello $userName! Here's the weather for today!"

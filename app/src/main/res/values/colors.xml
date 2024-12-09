@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Light theme colors -->
+    <color name="light_primary">#6200EE</color>
+    <color name="light_primary_variant">#3700B3</color>
+    <color name="light_background">#FFFFFF</color>
+    <color name="light_surface">#FFFFFF</color>
+    <color name="light_on_primary">#FFFFFF</color>
+    <color name="light_on_background">#000000</color>
+    <color name="light_on_surface">#000000</color>
+
+    <!-- Dark theme colors -->
+    <color name="dark_primary">#BB86FC</color>
+    <color name="dark_primary_variant">#3700B3</color>
+    <color name="dark_background">#121212</color>
+    <color name="dark_surface">#121212</color>
+    <color name="dark_on_primary">#000000</color>
+    <color name="dark_on_background">#FFFFFF</color>
+    <color name="dark_on_surface">#FFFFFF</color>
 </resources>
