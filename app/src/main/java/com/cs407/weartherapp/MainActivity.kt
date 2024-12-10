@@ -210,7 +210,7 @@ class MainActivity : AppCompatActivity() {
                 if (temperature != null) {
                     weatherText.text = "Current Temperature in $cityName is: $temperature°F"
                     recommendationText.text = getRecommendation(temperature)
-                    setWeatherVisual(condition)
+                    setWeatherVisual(temperature)
                 } else {
                     weatherText.text = "Temperature data not available"
                     recommendationText.text = ""
@@ -225,13 +225,13 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun setWeatherVisual(condition: String) {
-        when (condition.lowercase()) {
-            "clear", "sunny" -> weatherIcon.setImageResource(R.drawable.ic_sunny)
-            "cloudy" -> weatherIcon.setImageResource(R.drawable.ic_cloudy)
-            "rain", "rainy" -> weatherIcon.setImageResource(R.drawable.ic_rainy)
-            "snow" -> weatherIcon.setImageResource(R.drawable.ic_snow)
-            else -> weatherIcon.setImageResource(R.drawable.ic_unknown_weather)
+    private fun setWeatherVisual(temperature: Double) {
+        when {
+            temperature <= 32 -> weatherIcon.setImageResource(R.drawable.ic_freezing)
+            temperature in 32.0..50.0 -> weatherIcon.setImageResource(R.drawable.ic_cold)
+            temperature in 50.0..60.0 -> weatherIcon.setImageResource(R.drawable.ic_mild)
+            temperature in 60.0..75.0 -> weatherIcon.setImageResource(R.drawable.ic_warm)
+            else -> weatherIcon.setImageResource(R.drawable.ic_hot)
         }
     }
 
