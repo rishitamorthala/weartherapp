@@ -30,6 +30,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var weatherText: TextView
     private lateinit var recommendationText: TextView
@@ -51,6 +52,23 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //the list of rando quotes
+        val inspirationalQuotes = listOf(
+            "Sunshine is a welcome thing. It brings a lot of brightness.",
+            "Wherever you go, no matter what the weather, always bring your own sunshine.",
+            "The best thing one can do when it's raining is to let it rain.",
+            "Life isn't about waiting for the storm to pass...It's about learning to dance in the rain.",
+            "A positive attitude will lead to positive outcomes.",
+            "There is no such thing as bad weather, only different kinds of good weather.",
+            "To appreciate the beauty of a snowflake, it is necessary to stand out in the cold.",
+            "Just for the record, darling, not all positive change feels positive in the beginning.",
+            "Adopt the pace of nature: her secret is patience.",
+            "Keep your face always toward the sunshine—and shadows will fall behind you."
+        )
+
+        val quoteText: TextView = binding.quoteText // Make sure you have a TextView in your layout with the ID quote_text
+        val randomQuote = inspirationalQuotes.random() // Select a random quote
+        quoteText.text = randomQuote
 
         weatherText = findViewById(R.id.weather_text)
         recommendationText = findViewById(R.id.recommendation_text)

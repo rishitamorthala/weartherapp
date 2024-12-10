@@ -35,7 +35,7 @@ class SettingsActivity : AppCompatActivity() {
 
             Toast.makeText(
                 this,
-                if (isChecked) "Notifications enabled" else "Notifications disabled",
+                if (isChecked) "Daily Quotes enabled" else "Daily Quotes disabled",
                 Toast.LENGTH_SHORT
             ).show()
         }
