@@ -175,8 +175,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchWeather(latitude: Double, longitude: Double) {
-        val username = "school_morthala_rishita"
-        val password = "Y40Iu42uWd"
+        val username = "university_challa_supritha"
+        val password = "L4eq0QO12t"
         val credentials = "$username:$password"
         val authHeader = "Basic " + Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
 
