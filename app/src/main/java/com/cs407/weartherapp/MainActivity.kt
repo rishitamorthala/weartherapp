@@ -7,6 +7,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.util.Base64
 import android.util.Log
@@ -26,7 +27,6 @@ import retrofit2.Response
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import android.os.Handler
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,11 +42,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
         val isDarkMode = prefs.getBoolean("dark_mode_enabled", false)
-        if (isDarkMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
+        AppCompatDelegate.setDefaultNightMode(
+            if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES
+            else AppCompatDelegate.MODE_NIGHT_NO
+        )
 
         super.onCreate(savedInstanceState)
 
@@ -58,11 +57,32 @@ class MainActivity : AppCompatActivity() {
         weatherIcon = findViewById(R.id.weather_icon)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        setupGreeting()
+        setupBottomNavigation()
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                locationPermissionCode
+            )
+        } else {
+            startLocationUpdates()
+        }
+    }
+
+    private fun setupGreeting() {
         val userPrefs = getSharedPreferences("UserPrefs", MODE_PRIVATE)
         val userName = userPrefs.getString("FirstName", "User")
         val greetingText = findViewById<TextView>(R.id.greeting_text)
         greetingText.text = "Hello $userName! Here's the weather for today!"
+    }
 
+    private fun setupBottomNavigation() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -78,20 +98,7 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                locationPermissionCode
-            )
-        } else {
-            startLocationUpdates()
-        }
+        bottomNavigationView.selectedItemId = R.id.navigation_home
     }
 
     private fun navigateToActivity(targetActivity: Class<*>) {
@@ -172,8 +179,6 @@ class MainActivity : AppCompatActivity() {
                     return
                 }
 
-                Log.d("API Response", response.body().toString())
-
                 val weatherData = response.body()
                 val temperature = weatherData?.data?.firstOrNull()
                     ?.coordinates?.firstOrNull()
@@ -207,51 +212,40 @@ class MainActivity : AppCompatActivity() {
             "clear", "sunny" -> weatherIcon.setImageResource(R.drawable.ic_sunny)
             "cloudy" -> weatherIcon.setImageResource(R.drawable.ic_cloudy)
             "rain", "rainy" -> weatherIcon.setImageResource(R.drawable.ic_rainy)
-            "snow" -> weatherIcon.setImageResource(R.drawable.ic_sunny)
+            "snow" -> weatherIcon.setImageResource(R.drawable.ic_snow)
             else -> weatherIcon.setImageResource(R.drawable.ic_unknown_weather)
         }
     }
 
     private fun getRecommendation(temperature: Double): String {
         val prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-        val stylePreference = prefs.getString("StylePreference", "Casual") ?: "Casual"
-        val activityPreference = prefs.getString("ActivityPreference", "Outdoor") ?: "Outdoor"
+        val stylePreference = prefs.getString("StylePreference", "casual")?.lowercase() ?: "casual"
 
         return when {
-            temperature < 32 -> {
-                if (stylePreference == "Layered") {
-                    "It's freezing! Wear a heavy coat and scarf with layers."
-                } else {
-                    "It's freezing! Stay warm with a thick jacket and gloves."
-                }
+            temperature < 32 -> when (stylePreference) {
+                "formal" -> "Wear a formal coat with a scarf and gloves."
+                "sporty" -> "Layer up with a sports jacket and thermal wear."
+                else -> "Stay warm with a thick jacket and gloves."
             }
-            temperature in 32.0..50.0 -> {
-                if (activityPreference == "Outdoor") {
-                    "Chilly weather! Perfect for a hoodie and jeans."
-                } else {
-                    "Stay cozy indoors with a warm sweater."
-                }
+            temperature in 32.0..50.0 -> when (stylePreference) {
+                "formal" -> "A tailored blazer or trench coat is perfect."
+                "sporty" -> "Wear a warm hoodie and track pants."
+                else -> "A casual jacket is great for this weather."
             }
-            temperature in 50.0..60.0 -> {
-                if (stylePreference == "Light") {
-                    "A light jacket or cardigan works well."
-                } else {
-                    "A hoodie or casual jacket is great for this cool weather."
-                }
+            temperature in 50.0..60.0 -> when (stylePreference) {
+                "formal" -> "Try a stylish blazer with a scarf."
+                "sporty" -> "A light jacket or windbreaker works well."
+                else -> "A casual jacket and jeans are ideal."
             }
-            temperature in 60.0..75.0 -> {
-                if (activityPreference == "Outdoor") {
-                    "Enjoy the weather with a t-shirt and shorts!"
-                } else {
-                    "A casual t-shirt and jeans are perfect for this weather."
-                }
+            temperature in 60.0..75.0 -> when (stylePreference) {
+                "formal" -> "Opt for lightweight formal attire."
+                "sporty" -> "T-shirt and shorts are perfect."
+                else -> "T-shirt and jeans are great for this weather."
             }
-            else -> {
-                if (stylePreference == "Warm") {
-                    "Hot weather! Wear loose, breathable clothes."
-                } else {
-                    "It's hot! Stay cool with light fabrics and short sleeves."
-                }
+            else -> when (stylePreference) {
+                "formal" -> "Stay cool in linen formal wear."
+                "sporty" -> "Wear a sports tank top and shorts."
+                else -> "Light fabrics and short sleeves are ideal."
             }
         }
     }

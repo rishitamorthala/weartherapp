@@ -1,6 +1,7 @@
 package com.cs407.weartherapp
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.RadioGroup
@@ -10,9 +11,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class PreferencesActivity : AppCompatActivity() {
 
+    private lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.preferences)
+
+        sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
 
         setupSubmitButton()
         setupBottomNavigation()
@@ -45,70 +50,76 @@ class PreferencesActivity : AppCompatActivity() {
     }
 
     private fun savePreferences() {
-        val currentUser = AuthManager.getCurrentUser()
-        if (currentUser != null) {
-            val temperaturePreference = when (findViewById<RadioGroup>(R.id.radioGroupTemperature).checkedRadioButtonId) {
-                R.id.radioCold -> "cold"
-                R.id.radioHot -> "hot"
-                R.id.radioNeither -> "neither"
-                else -> "neither"
-            }
+        val temperaturePreference = when (findViewById<RadioGroup>(R.id.radioGroupTemperature).checkedRadioButtonId) {
+            R.id.radioCold -> "cold"
+            R.id.radioHot -> "hot"
+            R.id.radioNeither -> "neither"
+            else -> "neither"
+        }
 
-            val windPreference = when (findViewById<RadioGroup>(R.id.radioGroupWind).checkedRadioButtonId) {
-                R.id.radioHighWind -> "high"
-                R.id.radioModerateWind -> "moderate"
-                R.id.radioLowWind -> "low"
-                else -> "moderate"
-            }
+        val windPreference = when (findViewById<RadioGroup>(R.id.radioGroupWind).checkedRadioButtonId) {
+            R.id.radioHighWind -> "high"
+            R.id.radioModerateWind -> "moderate"
+            R.id.radioLowWind -> "low"
+            else -> "moderate"
+        }
 
-            val stylePreference = when (findViewById<RadioGroup>(R.id.styleGroup).checkedRadioButtonId) {
-                R.id.radioCasual -> "casual"
-                R.id.radioFormal -> "formal"
-                R.id.radioSporty -> "sporty"
-                else -> "casual"
-            }
+        val stylePreference = when (findViewById<RadioGroup>(R.id.styleGroup).checkedRadioButtonId) {
+            R.id.radioCasual -> "casual"
+            R.id.radioFormal -> "formal"
+            R.id.radioSporty -> "sporty"
+            else -> "casual"
+        }
 
-            val preferences = WeatherPreferences(
-                temperaturePreference = temperaturePreference,
-                windSensitivity = windPreference,
-                stylePreference = stylePreference
-            )
+        val recommendation = getStyleRecommendation(stylePreference)
 
-            AuthManager.saveWeatherPreferences(currentUser.username, preferences)
-            Toast.makeText(this, "Preferences saved successfully!", Toast.LENGTH_SHORT).show()
+        with(sharedPreferences.edit()) {
+            putString("TemperaturePreference", temperaturePreference)
+            putString("WindPreference", windPreference)
+            putString("StylePreference", stylePreference)
+            apply()
+        }
+
+        Toast.makeText(this, "Preferences saved successfully!\n$recommendation", Toast.LENGTH_LONG).show()
+    }
+
+    private fun getStyleRecommendation(stylePreference: String): String {
+        return when (stylePreference) {
+            "casual" -> "We recommend wearing a comfortable t-shirt, jeans, and sneakers for a relaxed day out."
+            "formal" -> "Consider wearing a tailored blazer, dress shirt, and polished shoes for a professional look."
+            "sporty" -> "Opt for a moisture-wicking t-shirt, joggers, and running shoes for an active day."
+            else -> "Choose an outfit that suits your activity and the weather!"
         }
     }
 
     private fun loadExistingPreferences() {
-        val currentUser = AuthManager.getCurrentUser()
-        if (currentUser != null) {
-            val preferences = AuthManager.getWeatherPreferences(currentUser.username)
-            if (preferences != null) {
-                val tempGroup = findViewById<RadioGroup>(R.id.radioGroupTemperature)
-                val tempId = when (preferences.temperaturePreference) {
-                    "cold" -> R.id.radioCold
-                    "hot" -> R.id.radioHot
-                    else -> R.id.radioNeither
-                }
-                tempGroup.check(tempId)
+        val temperaturePreference = sharedPreferences.getString("TemperaturePreference", "neither")
+        val windPreference = sharedPreferences.getString("WindPreference", "moderate")
+        val stylePreference = sharedPreferences.getString("StylePreference", "casual")
 
-                val windGroup = findViewById<RadioGroup>(R.id.radioGroupWind)
-                val windId = when (preferences.windSensitivity) {
-                    "high" -> R.id.radioHighWind
-                    "moderate" -> R.id.radioModerateWind
-                    else -> R.id.radioLowWind
-                }
-                windGroup.check(windId)
-
-                val styleGroup = findViewById<RadioGroup>(R.id.styleGroup)
-                val styleId = when (preferences.stylePreference) {
-                    "casual" -> R.id.radioCasual
-                    "formal" -> R.id.radioFormal
-                    else -> R.id.radioSporty
-                }
-                styleGroup.check(styleId)
-            }
+        val tempGroup = findViewById<RadioGroup>(R.id.radioGroupTemperature)
+        val tempId = when (temperaturePreference) {
+            "cold" -> R.id.radioCold
+            "hot" -> R.id.radioHot
+            else -> R.id.radioNeither
         }
+        tempGroup.check(tempId)
+
+        val windGroup = findViewById<RadioGroup>(R.id.radioGroupWind)
+        val windId = when (windPreference) {
+            "high" -> R.id.radioHighWind
+            "moderate" -> R.id.radioModerateWind
+            else -> R.id.radioLowWind
+        }
+        windGroup.check(windId)
+
+        val styleGroup = findViewById<RadioGroup>(R.id.styleGroup)
+        val styleId = when (stylePreference) {
+            "casual" -> R.id.radioCasual
+            "formal" -> R.id.radioFormal
+            else -> R.id.radioSporty
+        }
+        styleGroup.check(styleId)
     }
 
     private fun setupBottomNavigation() {
