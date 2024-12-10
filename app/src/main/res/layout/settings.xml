@@ -60,18 +60,20 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/notificationsLabel"
+                    android:id="@+id/messagePreferenceLabel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Daily Quotes"
+                    android:text="Choose your daily message:"
                     android:textSize="18sp"
                     android:textColor="@color/light_on_surface" />
 
                 <Switch
                     android:id="@+id/notificationsSwitch"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textOff="Inspirational Quotes"
+                    android:textOn="Daily Affirmations" />
             </LinearLayout>
 
             <View

@@ -29,8 +29,8 @@
             tools:text="Loading" />
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="336dp"
+            android:layout_height="54dp"
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="16dp"
             app:cardBackgroundColor="#EBFFFFFF"
@@ -38,15 +38,17 @@
             app:cardElevation="0dp">
 
             <TextView
-                android:id="@+id/quote_text"
-                android:layout_width="match_parent"
+                android:id="@+id/quoteText"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="12dp"
-                android:textColor="#1A237E"
-                android:textSize="14sp"
-                android:textStyle="italic"
-                tools:text="Loading" />
+                android:layout_marginTop="8dp"
+                android:text="Inspirational quote appears here"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recommendation_text" />
+
 
         </androidx.cardview.widget.CardView>
 

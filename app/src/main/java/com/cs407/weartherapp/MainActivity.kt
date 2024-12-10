@@ -52,22 +52,37 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //the list of rando quotes
-        val inspirationalQuotes = listOf(
-            "Sunshine is a welcome thing. It brings a lot of brightness.",
-            "Wherever you go, no matter what the weather, always bring your own sunshine.",
-            "The best thing one can do when it's raining is to let it rain.",
-            "Life isn't about waiting for the storm to pass...It's about learning to dance in the rain.",
-            "A positive attitude will lead to positive outcomes.",
-            "There is no such thing as bad weather, only different kinds of good weather.",
-            "To appreciate the beauty of a snowflake, it is necessary to stand out in the cold.",
-            "Just for the record, darling, not all positive change feels positive in the beginning.",
-            "Adopt the pace of nature: her secret is patience.",
-            "Keep your face always toward the sunshine—and shadows will fall behind you."
-        )
+        //the list inspirational quotes and daily affirmations
+        val messages = if (prefs.getBoolean("daily_affirmations", true)) {
+            listOf(
+                "I am capable of achieving great things.",
+                "I believe in myself and my abilities.",
+                "Today, I choose to think positive and create a wonderful day for myself.",
+                "I am in charge of how I feel, and today I am choosing happiness.",
+                "I trust myself to make the right decision.",
+                "I am proud of myself and all that I have accomplished.",
+                "I give myself permission to do what is right for me.",
+                "I am worthy of respect and acceptance.",
+                "My contributions to the world are valuable.",
+                "I am a powerful creator. I create the life I want."
+            )
+        } else {
+            listOf(
+                "Sunshine is a welcome thing. It brings a lot of brightness.",
+                "Wherever you go, no matter what the weather, always bring your own sunshine.",
+                "The best thing one can do when it's raining is to let it rain.",
+                "Life isn't about waiting for the storm to pass...It's about learning to dance in the rain.",
+                "A positive attitude will lead to positive outcomes.",
+                "There is no such thing as bad weather, only different kinds of good weather.",
+                "To appreciate the beauty of a snowflake, it is necessary to stand out in the cold.",
+                "Just for the record, darling, not all positive change feels positive in the beginning.",
+                "Adopt the pace of nature: her secret is patience.",
+                "Keep your face always toward the sunshine—and shadows will fall behind you."
+            )
+        }
 
-        val quoteText: TextView = binding.quoteText // Make sure you have a TextView in your layout with the ID quote_text
-        val randomQuote = inspirationalQuotes.random() // Select a random quote
+        val quoteText: TextView = binding.quoteText
+        val randomQuote = messages.random()
         quoteText.text = randomQuote
 
         weatherText = findViewById(R.id.weather_text)
