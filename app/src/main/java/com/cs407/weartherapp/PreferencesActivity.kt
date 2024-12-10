@@ -71,7 +71,7 @@ class PreferencesActivity : AppCompatActivity() {
             else -> "casual"
         }
 
-        val recommendation = getStyleRecommendation(stylePreference)
+
 
         with(sharedPreferences.edit()) {
             putString("TemperaturePreference", temperaturePreference)
@@ -80,17 +80,9 @@ class PreferencesActivity : AppCompatActivity() {
             apply()
         }
 
-        Toast.makeText(this, "Preferences saved successfully!\n$recommendation", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Preferences saved successfully!", Toast.LENGTH_LONG).show()
     }
 
-    private fun getStyleRecommendation(stylePreference: String): String {
-        return when (stylePreference) {
-            "casual" -> "We recommend wearing a comfortable t-shirt, jeans, and sneakers for a relaxed day out."
-            "formal" -> "Consider wearing a tailored blazer, dress shirt, and polished shoes for a professional look."
-            "sporty" -> "Opt for a moisture-wicking t-shirt, joggers, and running shoes for an active day."
-            else -> "Choose an outfit that suits your activity and the weather!"
-        }
-    }
 
     private fun loadExistingPreferences() {
         val temperaturePreference = sharedPreferences.getString("TemperaturePreference", "neither")

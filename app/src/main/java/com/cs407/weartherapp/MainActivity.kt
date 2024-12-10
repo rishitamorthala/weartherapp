@@ -230,7 +230,7 @@ class MainActivity : AppCompatActivity() {
             temperature in 32.0..50.0 -> when (stylePreference) {
                 "formal" -> "A tailored blazer or trench coat is perfect."
                 "sporty" -> "Wear a warm hoodie and track pants."
-                else -> "A casual jacket is great for this weather."
+                else -> "A thicker jacket is great for this weather."
             }
             temperature in 50.0..60.0 -> when (stylePreference) {
                 "formal" -> "Try a stylish blazer with a scarf."

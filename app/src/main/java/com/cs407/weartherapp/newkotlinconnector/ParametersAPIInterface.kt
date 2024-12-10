@@ -2,7 +2,6 @@ package com.example.newkotlinconnector
 
 
 import com.cs407.weartherapp.com.cs407.weartherapp.newkotlinconnector.Parameters
-import com.cs407.weartherapp.com.cs407.weartherapp.newkotlinconnector.WindResponse
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -27,10 +26,6 @@ interface ParametersAPIInterface {
         @Body body: RequestBody,
     ): Response<Parameters>
 
-    // New method for wind data
-    @GET
-    suspend fun getWindData(
-        @Header("Authorization") authHeader: String,
-        @Url url: String
-    ): Response<WindResponse>
+
+
 }
