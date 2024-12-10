@@ -223,31 +223,32 @@ class MainActivity : AppCompatActivity() {
 
         return when {
             temperature < 32 -> when (stylePreference) {
-                "formal" -> "Wear a formal coat with a scarf and gloves."
-                "sporty" -> "Layer up with a sports jacket and thermal wear."
-                else -> "Stay warm with a thick jacket and gloves."
+                "formal" -> "Wrap up like royalty in an elegant overcoat, thick scarf, and stylish gloves. ❄️🧤"
+                "sporty" -> "Gear up for a frosty adventure with a sports jacket and thermal wear. Perfect for a brisk jog or a snowball fight! ⛄🏃"
+                else -> "It's cuddle weather! Stay toasty with a thick jacket and your warmest gloves. Perfect for sipping hot cocoa by the fire! 🔥☕"
             }
             temperature in 32.0..50.0 -> when (stylePreference) {
-                "formal" -> "A tailored blazer or trench coat is perfect."
-                "sporty" -> "Wear a warm hoodie and track pants."
-                else -> "A thicker jacket is great for this weather."
+                "formal" -> "Step out in style with a sleek trench coat and a cozy sweater. Don’t forget a hot latte to complete the vibe! ☕🧥"
+                "sporty" -> "A hoodie and track pants will keep you warm during your morning workout. Stay active, stay healthy! 🏋️‍♂️"
+                else -> "Layer up with a comfy jacket and enjoy the crisp air. Great for a walk in the park or a casual meetup. 🌳🚶"
             }
             temperature in 50.0..60.0 -> when (stylePreference) {
-                "formal" -> "Try a stylish blazer with a scarf."
-                "sporty" -> "A light jacket or windbreaker works well."
-                else -> "A casual jacket and jeans are ideal."
+                "formal" -> "A stylish blazer and a fine scarf make the perfect combo for this cool weather. Ideal for both office and evening walks. 🌆👔"
+                "sporty" -> "A windbreaker and joggers are your best friends for a windy day. Hit the trails or the track with some flair! 🌬️🏃"
+                else -> "A light jacket and your trusty jeans are all you need to rock the day. Add a beanie for some extra flair! 🧢👖"
             }
             temperature in 60.0..75.0 -> when (stylePreference) {
-                "formal" -> "Opt for lightweight formal attire."
-                "sporty" -> "T-shirt and shorts are perfect."
-                else -> "T-shirt and jeans are great for this weather."
+                "formal" -> "Light and breezy fabrics are the order of the day. Dress to impress with minimal effort and maximum comfort. 🌼👗"
+                "sporty" -> "T-shirt and shorts weather is here! Perfect for a beach volleyball game or a picnic. 🌞🏖️"
+                else -> "Embrace the warmth with a tee and jeans. Throw in sunglasses and a hat for a perfect sunny day out. 😎🌞"
             }
             else -> when (stylePreference) {
-                "formal" -> "Stay cool in linen formal wear."
-                "sporty" -> "Wear a sports tank top and shorts."
-                else -> "Light fabrics and short sleeves are ideal."
+                "formal" -> "Float through the heat in elegant linen. Ideal for outdoor weddings or a stroll down the boulevard. 🌷👔"
+                "sporty" -> "Light tank tops and shorts are your go-to for a heatwave. Stay hydrated and keep cool! 💧🩳"
+                else -> "Airy fabrics and loose clothing will keep you cool as a cucumber. Sunscreen and water are must-haves today! 🌞💧"
             }
         }
+
     }
 
     override fun onDestroy() {
