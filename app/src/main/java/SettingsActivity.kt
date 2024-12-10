@@ -25,14 +25,17 @@ class SettingsActivity : AppCompatActivity() {
         val notificationsSwitch = findViewById<Switch>(R.id.notificationsSwitch)
         val themeSwitch = findViewById<Switch>(R.id.themeSwitch)
 
-        // Set initial switch state based on current theme
-        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        themeSwitch.isChecked = currentNightMode == Configuration.UI_MODE_NIGHT_YES
+        // Retrieve saved preferences
+        val prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
+        val isDarkMode = prefs.getBoolean("dark_mode_enabled", false)
+        notificationsSwitch.isChecked = prefs.getBoolean("notifications_enabled", false)
 
+        // Set initial state of the theme switch
+        themeSwitch.isChecked = isDarkMode
+
+        // Notifications switch listener
         notificationsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            val prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
             prefs.edit().putBoolean("notifications_enabled", isChecked).apply()
-
             Toast.makeText(
                 this,
                 if (isChecked) "Daily Quotes enabled" else "Daily Quotes disabled",
@@ -40,8 +43,8 @@ class SettingsActivity : AppCompatActivity() {
             ).show()
         }
 
+        // Theme switch listener
         themeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            val prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
             prefs.edit().putBoolean("dark_mode_enabled", isChecked).apply()
 
             if (isChecked) {
@@ -50,12 +53,9 @@ class SettingsActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
 
-            // Recreate the activity to apply theme changes
+            // Recreate activity to apply changes
             recreate()
         }
-
-        val prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
-        notificationsSwitch.isChecked = prefs.getBoolean("notifications_enabled", false)
 
         val logoutButton = findViewById<Button>(R.id.logoutButton)
         logoutButton.setOnClickListener {
@@ -96,7 +96,7 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // Update switch state when activity resumes
+        // Update the switch state when the activity resumes
         val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         findViewById<Switch>(R.id.themeSwitch).isChecked = currentNightMode == Configuration.UI_MODE_NIGHT_YES
     }

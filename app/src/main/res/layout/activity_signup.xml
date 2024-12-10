@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@drawable/extra_gradient">
 
     <LinearLayout
         android:orientation="vertical"
@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:text="Create an Account"
             android:textSize="24sp"
-            android:textColor="#333333"
+            android:textColor="@color/white"
             android:fontFamily="sans-serif-medium"
             android:layout_gravity="center"
             android:paddingBottom="24dp" />
@@ -26,9 +26,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:textColor="#333333"
+            android:textColor="@color/white"
             android:textSize="16sp"
-            android:backgroundTint="#DDDDDD"
+            android:backgroundTint="@color/white"
             android:layout_marginBottom="16dp" />
 
         <EditText
@@ -37,9 +37,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:textColor="#333333"
+            android:textColor="@color/white"
             android:textSize="16sp"
-            android:backgroundTint="#DDDDDD"
+            android:backgroundTint="@color/white"
             android:layout_marginBottom="16dp" />
 
         <EditText
@@ -48,9 +48,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:textColor="#333333"
+            android:textColor="@color/white"
             android:textSize="16sp"
-            android:backgroundTint="#DDDDDD"
+            android:backgroundTint="@color/white"
             android:layout_marginBottom="16dp" />
 
         <EditText
@@ -60,16 +60,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:textColor="#333333"
+            android:textColor="@color/white"
             android:textSize="16sp"
-            android:backgroundTint="#DDDDDD"
+            android:backgroundTint="@color/white"
             android:layout_marginBottom="16dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gender"
-            android:textColor="#333333"
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:layout_marginBottom="8dp" />
 
@@ -87,8 +87,8 @@
             android:text="Sign Up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#6200EE"
-            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/purple_500"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:fontFamily="sans-serif-medium"
             android:layout_marginBottom="16dp" />
@@ -96,7 +96,7 @@
         <TextView
             android:id="@+id/loginText"
             android:text="Already have an account?"
-            android:textColor="#6200EE"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"

@@ -2,8 +2,10 @@ package com.cs407.weartherapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.cs407.weartherapp.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -16,13 +18,28 @@ class LoginActivity : AppCompatActivity() {
 
         AuthManager.init(applicationContext)
 
-        // Check if the user is already logged in
+
+        loadIcons()
+
+
         if (AuthManager.getCurrentUser() != null) {
             navigateToMain()
             return
         }
 
         setupClickListeners()
+    }
+
+    private fun loadIcons() {
+
+        Glide.with(this)
+            .load("https://static.vecteezy.com/system/resources/thumbnails/009/304/897/small/sun-icon-set-clipart-design-illustration-free-png.png")
+            .into(binding.sunIcon)
+
+
+        Glide.with(this)
+            .load("https://images.vexels.com/content/240044/preview/rainy-clouds-color-stroke-dffe1c.png")
+            .into(binding.cloudIcon)
     }
 
     private fun setupClickListeners() {
