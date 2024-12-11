@@ -55,16 +55,16 @@ class MainActivity : AppCompatActivity() {
         //the list inspirational quotes and daily affirmations
         val messages = if (prefs.getBoolean("daily_affirmations", true)) {
             listOf(
-                "I am capable of achieving great things.",
-                "I believe in myself and my abilities.",
-                "Today, I choose to think positive and create a wonderful day for myself.",
-                "I am in charge of how I feel, and today I am choosing happiness.",
-                "I trust myself to make the right decision.",
-                "I am proud of myself and all that I have accomplished.",
-                "I give myself permission to do what is right for me.",
-                "I am worthy of respect and acceptance.",
-                "My contributions to the world are valuable.",
-                "I am a powerful creator. I create the life I want."
+                "   I am capable of achieving great things.",
+                "   I believe in myself and my abilities.",
+                " Today, I choose to think positive and create a wonderful day for myself.",
+                " I am in charge of how I feel, and today I am choosing happiness.",
+                "   I trust myself to make the right decision.",
+                "   I am proud of myself and all that I have accomplished.",
+                "   I give myself permission to do what is right for me.",
+                "   I am worthy of respect and acceptance.",
+                "   My contributions to the world are valuable.",
+                "  I am a powerful creator. I create the life I want."
             )
         } else {
             listOf(
