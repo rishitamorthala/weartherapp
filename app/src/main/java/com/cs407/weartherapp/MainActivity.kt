@@ -190,6 +190,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchWeather(latitude: Double, longitude: Double) {
+        // Show loading state
+        weatherText.text = "Loading weather data..."
+        recommendationText.text = "Fetching recommendations..."
+        weatherIcon.setImageResource(0) // Remove any existing icon
+
         val username = "university_challa_supritha"
         val password = "L4eq0QO12t"
         val credentials = "$username:$password"
@@ -209,6 +214,7 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
                 if (!response.isSuccessful) {
                     weatherText.text = "Failed to fetch weather data. Code: ${response.code()}"
+                    recommendationText.text = ""
                     return
                 }
 
