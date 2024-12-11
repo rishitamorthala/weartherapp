@@ -9,9 +9,9 @@
     <color name="light_on_background">#000000</color>
     <color name="light_on_surface">#000000</color>
     <color name="light_secondary">#03DAC6</color>
-    <color name="light_home_background">#87CEEB</color> <!-- Light mode home page background -->
-    <color name="light_preferences_background">#EDE7F6</color> <!-- Light mode preferences background -->
-    <color name="light_card_background">#FFFFFF</color> <!-- Light mode card background -->
+    <color name="light_home_background">#87CEEB</color>
+    <color name="light_preferences_background">#EDE7F6</color>
+    <color name="light_card_background">#FFFFFF</color>
 
     <!-- Dark theme colors -->
     <color name="dark_primary">#BB86FC</color>
@@ -22,9 +22,9 @@
     <color name="dark_on_background">#FFFFFF</color>
     <color name="dark_on_surface">#FFFFFF</color>
     <color name="dark_secondary">#03DAC6</color>
-    <color name="dark_home_background">#303030</color> <!-- Dark mode home page background -->
-    <color name="dark_preferences_background">#424242</color> <!-- Dark mode preferences background -->
-    <color name="dark_card_background">#303030</color> <!-- Dark mode card background -->
+    <color name="dark_home_background">#303030</color>
+    <color name="dark_preferences_background">#424242</color>
+    <color name="dark_card_background">#303030</color>
 
     <!-- Additional colors -->
     <color name="purple_500">#6200EE</color>
